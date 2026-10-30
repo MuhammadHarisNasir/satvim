@@ -115,7 +115,7 @@ function CallMockup() {
             </div>
           </div>
           <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-teal-soft px-2.5 py-1 text-xs font-medium text-teal-strong">
-            <span className="h-2 w-2 rounded-full bg-teal-strong motion-safe:animate-pulse" aria-hidden /> Live
+            <span className="h-2 w-2 rounded-full bg-teal-strong motion-safe:animate-pulse" aria-hidden /> Example
           </span>
         </div>
         <ol className="mt-4 space-y-3">
