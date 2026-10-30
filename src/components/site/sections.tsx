@@ -57,7 +57,7 @@ export function Header() {
     <header className="on-navy sticky top-0 z-50 border-b border-on-navy/10 bg-navy/95 backdrop-blur">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-5">
         <a href="#top" aria-label="HarryFlows home" className="shrink-0">
-          <Logo reversed className="h-9" />
+          <Logo reversed className="h-11" />
         </a>
         <nav aria-label="Main" className="hidden md:block">
           <ul className="flex items-center gap-7">
