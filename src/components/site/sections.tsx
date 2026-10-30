@@ -518,7 +518,7 @@ export function Contact() {
 
   function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const d = Object.fromEntries(new FormData(e.currentTarget)) as Record<string, string>;
+    const d = Object.fromEntries(new FormData(e.currentTarget)) as Partial<Record<"name" | "email" | "agency" | "volume" | "message", string>>;
     const errs: Errors = {};
     if (!d.name?.trim()) errs.name = "Please enter your name.";
     if (!d.email?.trim()) errs.email = "Please enter your work email.";
