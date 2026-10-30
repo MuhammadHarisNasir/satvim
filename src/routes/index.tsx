@@ -1,24 +1,52 @@
 import { createFileRoute } from "@tanstack/react-router";
+import {
+  Contact, CtaBand, Demo, Faq, Features, Fit, Footer, Header, Hero, HowItWorks, Ownership, Pricing, Problem, Roi,
+} from "@/components/site/sections";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
+const TITLE = "HarryFlows — AI voice screening for UK recruitment agencies";
+const DESC =
+  "An AI voice agent that calls your new applicants, screens them against your criteria and sends only qualified candidates to your team.";
+
 export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title: TITLE },
+      { name: "description", content: DESC },
+      { property: "og:title", content: TITLE },
+      { property: "og:description", content: DESC },
+      { property: "og:type", content: "website" },
+      { property: "og:url", content: "/" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: TITLE },
+      { name: "twitter:description", content: DESC },
+    ],
+    links: [{ rel: "canonical", href: "/" }],
+  }),
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
 function Index() {
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
+    <>
+      <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-md focus:bg-background focus:px-4 focus:py-2">
+        Skip to content
+      </a>
+      <Header />
+      <main id="main">
+        <Hero />
+        <Problem />
+        <HowItWorks />
+        <Features />
+        <Demo />
+        <Ownership />
+        <Fit />
+        <Roi />
+        <Pricing />
+        <Faq />
+        <CtaBand />
+        <Contact />
+      </main>
+      <Footer />
+    </>
   );
 }
