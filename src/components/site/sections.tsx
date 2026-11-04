@@ -142,11 +142,11 @@ function CallMockup() {
 
   useEffect(() => {
     if (reduced || !visible) return;
-    const t = window.setTimeout(() => setStep((s) => (s + 1) % CALL_STEPS.length), CALL_STEPS[step].ms);
+    const t = window.setTimeout(() => setStep((s) => (s + 1) % CALL_STEPS.length), (CALL_STEPS[step]?.ms ?? 1000));
     return () => window.clearTimeout(t);
   }, [step, visible, reduced]);
 
-  const cur = CALL_STEPS[step];
+  const cur = CALL_STEPS[step] ?? CALL_STEPS[0]!;
   useEffect(() => {
     const el = listRef.current;
     if (el) el.scrollTop = el.scrollHeight; // scrolls inside the card only
@@ -154,7 +154,7 @@ function CallMockup() {
 
   const ended = cur.count === CALL_LINES.length;
   const status = !cur.connected ? "Calling..." : ended ? "Call ended" : "Screening call in progress";
-  const timer = cur.count ? CALL_LINES[cur.count - 1].at : "00:00";
+  const timer = cur.count ? (CALL_LINES[cur.count - 1]?.at ?? "00:00") : "00:00";
   const nextAi = CALL_LINES[cur.count]?.ai ?? true;
   const anim = reduced ? "" : "animate-in fade-in slide-in-from-bottom-2 duration-500";
 
