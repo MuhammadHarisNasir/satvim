@@ -5,10 +5,10 @@ import { EMAIL } from "@/lib/site-config";
 export const Route = createFileRoute("/privacy")({
   head: () => ({
     meta: [
-      { title: "Privacy Policy — HarryFlows" },
-      { name: "description", content: "HarryFlows privacy policy (placeholder pending legal review)." },
-      { property: "og:title", content: "Privacy Policy — HarryFlows" },
-      { property: "og:description", content: "HarryFlows privacy policy (placeholder pending legal review)." },
+      { title: "Privacy Policy — HarisFlows" },
+      { name: "description", content: "HarisFlows privacy policy (placeholder pending legal review)." },
+      { property: "og:title", content: "Privacy Policy — HarisFlows" },
+      { property: "og:description", content: "HarisFlows privacy policy (placeholder pending legal review)." },
       { property: "og:type", content: "article" },
       { name: "robots", content: "noindex" },
     ],
@@ -16,7 +16,7 @@ export const Route = createFileRoute("/privacy")({
   }),
   component: () => (
     <LegalLayout title="Privacy Policy">
-      <p>[Placeholder] This section will describe what personal data HarryFlows collects and why.</p>
+      <p>[Placeholder] This section will describe what personal data HarisFlows collects and why.</p>
       <h2>Information we collect</h2>
       <p>[Placeholder] Details of enquiry form data and any data processed on behalf of clients.</p>
       <h2>How we use information</h2>

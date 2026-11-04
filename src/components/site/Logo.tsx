@@ -5,7 +5,7 @@ export function Logo({ reversed = false, className = "h-9" }: { reversed?: boole
   return (
     <img
       src={reversed ? logoWhite.url : logo.url}
-      alt="HarryFlows"
+      alt="HarisFlows"
       className={`${className} w-auto`}
       width={764}
       height={350}

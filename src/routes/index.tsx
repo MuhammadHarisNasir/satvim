@@ -3,7 +3,7 @@ import {
   Contact, CtaBand, Demo, Faq, Features, Fit, Footer, Header, Hero, HowItWorks, Ownership, Pricing, Problem, Roi,
 } from "@/components/site/sections";
 
-const TITLE = "HarryFlows — AI voice screening for UK recruitment agencies";
+const TITLE = "HarisFlows — AI voice screening for UK recruitment agencies";
 const DESC =
   "An AI voice agent that calls your new applicants, screens them against your criteria and sends only qualified candidates to your team.";
 

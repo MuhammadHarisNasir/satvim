@@ -57,7 +57,7 @@ export function Header() {
   return (
     <header className="on-navy sticky top-0 z-50 border-b border-on-navy/10 bg-navy/95 backdrop-blur">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-5">
-        <a href="#top" aria-label="HarryFlows home" className="shrink-0">
+        <a href="#top" aria-label="HarisFlows home" className="shrink-0">
           <Logo reversed className="h-11" />
         </a>
         <nav aria-label="Main" className="hidden md:block">
@@ -270,7 +270,7 @@ export function Hero() {
             Qualify every candidate in <span className="text-teal">minutes</span>, not days.
           </h1>
           <p className="mt-6 max-w-xl text-lg text-on-navy-muted">
-            HarryFlows gives UK recruitment agencies an AI voice agent that calls new applicants, screens them against your criteria and sends only the qualified ones to your team.
+            HarisFlows gives UK recruitment agencies an AI voice agent that calls new applicants, screens them against your criteria and sends only the qualified ones to your team.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <DemoButton />
@@ -325,7 +325,7 @@ export function HowItWorks() {
     <section id="how-it-works" className="bg-secondary py-20 sm:py-28">
       <div className="mx-auto max-w-6xl px-5">
         <SectionHead eyebrow="How it works" title="From application to shortlist, automatically"
-          intro="We qualify the candidates you already have. HarryFlows does not find or generate candidates." />
+          intro="We qualify the candidates you already have. HarisFlows does not find or generate candidates." />
         <ol className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {steps.map((s, i) => (
             <li key={s.title}>
@@ -411,7 +411,7 @@ export function Demo() {
                 <PlaceholderPanel icon={Play} label="Walkthrough video coming soon" token="{{DEMO_VIDEO_URL}}" note="The demo video will appear here." />
               ) : (
                 <div className="aspect-video overflow-hidden rounded-xl">
-                  <iframe src={DEMO_VIDEO_URL} title="HarryFlows 90-second walkthrough" className="h-full w-full" allow="fullscreen; picture-in-picture" loading="lazy" />
+                  <iframe src={DEMO_VIDEO_URL} title="HarisFlows 90-second walkthrough" className="h-full w-full" allow="fullscreen; picture-in-picture" loading="lazy" />
                 </div>
               )}
             </div>
@@ -482,7 +482,7 @@ export function Fit() {
         <Reveal delay={100} className="h-full">
           <div className="h-full rounded-2xl border-2 border-destructive/30 bg-card p-7">
             <h2 className="flex items-center gap-2 text-2xl font-extrabold"><XCircle className="h-6 w-6 text-destructive" aria-hidden /> Not a fit if</h2>
-            <p className="mt-4 text-muted-foreground">You're looking for lead generation or ad-driven candidate sourcing. HarryFlows qualifies existing candidates only.</p>
+            <p className="mt-4 text-muted-foreground">You're looking for lead generation or ad-driven candidate sourcing. HarisFlows qualifies existing candidates only.</p>
           </div>
         </Reveal>
       </div>
@@ -587,7 +587,7 @@ export function Faq() {
   const qs = [
     ["Does the AI say it is an AI?", "Yes. It identifies itself as AI at the start of every call and answers honestly if asked."],
     ["What if the candidate wants a human?", "The agent notes the request, ends the call politely, and your team follows up."],
-    ["Do you generate leads?", "No. HarryFlows qualifies candidates you already have; we do not generate leads or run ads."],
+    ["Do you generate leads?", "No. HarisFlows qualifies candidates you already have; we do not generate leads or run ads."],
     ["Can we change the screening questions?", "Yes. The questions and qualification criteria are customisable."],
     ["Who owns the data and accounts?", "You own your accounts and data."],
     ["Which tools do you use?", "Make.com, Vapi, Airtable, Google Sheets, Slack and Gmail. Other integrations are available on a custom plan."],
@@ -720,7 +720,7 @@ export function Footer() {
       <div className="mx-auto grid max-w-6xl gap-10 px-5 py-14 md:grid-cols-[1.4fr_1fr_1.2fr]">
         <div>
           <Logo reversed className="h-10" />
-          <p className="mt-4 max-w-xs text-sm">HarryFlows builds AI voice screening workflows that qualify the candidates UK recruitment agencies already receive.</p>
+          <p className="mt-4 max-w-xs text-sm">HarisFlows builds AI voice screening workflows that qualify the candidates UK recruitment agencies already receive.</p>
         </div>
         <nav aria-label="Footer">
           <ul className="space-y-2 text-sm">
@@ -744,7 +744,7 @@ export function Footer() {
           </li>
         </ul>
       </div>
-      <div className="border-t border-on-navy/10 py-5 text-center text-xs">© 2026 HarryFlows</div>
+      <div className="border-t border-on-navy/10 py-5 text-center text-xs">© 2026 HarisFlows</div>
     </footer>
   );
 }
