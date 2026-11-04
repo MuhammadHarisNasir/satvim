@@ -1,14 +1,14 @@
-import logo from "@/assets/harryflows-logo.png.asset.json";
-import logoWhite from "@/assets/harryflows-logo-white.png.asset.json";
+import logo from "@/assets/harisflows-logo.png";
+import logoWhite from "@/assets/harisflows-logo-white.png";
 
 export function Logo({ reversed = false, className = "h-9" }: { reversed?: boolean; className?: string }) {
   return (
     <img
-      src={reversed ? logoWhite.url : logo.url}
+      src={reversed ? logoWhite : logo}
       alt="HarisFlows"
       className={`${className} w-auto`}
-      width={764}
-      height={350}
+      width={1527}
+      height={700}
     />
   );
 }
