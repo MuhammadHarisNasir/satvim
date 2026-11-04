@@ -237,3 +237,22 @@
 @media (prefers-reduced-motion: reduce) {
   .flow-runner { animation: none; opacity: 0; }
 }
+
+/* Hero call mockup waveform (decorative) */
+@keyframes wave-bar {
+  0%, 100% { transform: scaleY(0.18); }
+  50% { transform: scaleY(var(--amp, 0.8)); }
+}
+.wave-bar {
+  transform: scaleY(0.12);
+  transform-origin: center;
+  transition: transform 0.3s var(--ease-out);
+}
+.wave[data-active="true"] .wave-bar {
+  animation: wave-bar var(--dur, 0.6s) var(--ease-out) infinite;
+  animation-delay: var(--delay, 0s);
+}
+.wave[data-paused="true"] .wave-bar { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) {
+  .wave .wave-bar, .wave[data-active="true"] .wave-bar { animation: none; transform: scaleY(0.3); transition: none; }
+}

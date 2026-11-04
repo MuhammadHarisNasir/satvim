@@ -107,12 +107,36 @@ const CALL_LINES = [
 ];
 // Chips and the message count at which each appears.
 const CALL_CHIPS = [{ label: "5 yrs", after: 4 }, { label: "Logistics", after: 4 }, { label: "4 wks notice", after: 6 }, { label: "Hybrid", after: 6 }];
+const speakMs = (t: string) => Math.min(4000, Math.max(1500, t.length * 60));
+// Fixed pseudo-random amplitudes/durations so SSR and client match.
+const WAVE_BARS = Array.from({ length: 28 }, (_, i) => ({
+  amp: 0.35 + ((Math.sin(i * 12.9898) * 43758.5453) % 1 + 1) % 1 * 0.65,
+  dur: 0.45 + ((i * 7) % 5) * 0.08,
+  delay: -((i * 37) % 11) * 0.06,
+}));
+function WaveRow({ label, active, paused, tone }: { label: string; active: boolean; paused: boolean; tone: string }) {
+  return (
+    <div className="flex items-center gap-3">
+      <div className="w-20 shrink-0">
+        <p className="text-[11px] font-semibold leading-tight">{label}</p>
+        <p className="text-[10px] leading-tight text-muted-foreground">{active ? "Speaking" : "Listening"}</p>
+      </div>
+      <div className="wave flex h-6 flex-1 items-center justify-between gap-[3px]" data-active={active} data-paused={paused}>
+        {WAVE_BARS.map((b, i) => (
+          <span key={i} className={`wave-bar h-full w-[3px] rounded-full ${tone} ${i >= 16 ? "hidden sm:block" : ""}`}
+            style={{ ["--amp" as string]: b.amp, ["--dur" as string]: `${b.dur}s`, ["--delay" as string]: `${b.delay}s` }} />
+        ))}
+      </div>
+    </div>
+  );
+}
 type CallStep = { connected: boolean; count: number; typing: boolean; fading?: boolean; ms: number };
 const CALL_STEPS: CallStep[] = (() => {
   const s: CallStep[] = [{ connected: false, count: 0, typing: false, ms: 1500 }];
   CALL_LINES.forEach((_, i) => {
     s.push({ connected: true, count: i, typing: true, ms: 1000 });
-    s.push({ connected: true, count: i + 1, typing: false, ms: i === CALL_LINES.length - 1 ? 4000 : 2000 });
+    const speak = speakMs(CALL_LINES[i]!.text);
+    s.push({ connected: true, count: i + 1, typing: false, ms: speak + (i === CALL_LINES.length - 1 ? 4000 : 600) });
   });
   s.push({ connected: true, count: CALL_LINES.length, typing: false, fading: true, ms: 500 });
   return s;
@@ -125,6 +149,8 @@ function CallMockup() {
   const [step, setStep] = useState(0);
   const [visible, setVisible] = useState(false);
   const [reduced, setReduced] = useState(false);
+  const [tabHidden, setTabHidden] = useState(false);
+  const [speaking, setSpeaking] = useState(false);
 
   useEffect(() => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -137,16 +163,29 @@ function CallMockup() {
       io = new IntersectionObserver(([e]) => setVisible(!!e?.isIntersecting));
       io.observe(el);
     }
-    return () => { mq.removeEventListener("change", apply); io?.disconnect(); };
+    const onVis = () => setTabHidden(document.hidden);
+    onVis();
+    document.addEventListener("visibilitychange", onVis);
+    return () => { mq.removeEventListener("change", apply); io?.disconnect(); document.removeEventListener("visibilitychange", onVis); };
   }, []);
 
   useEffect(() => {
-    if (reduced || !visible) return;
+    if (reduced || !visible || tabHidden) return;
     const t = window.setTimeout(() => setStep((s) => (s + 1) % CALL_STEPS.length), (CALL_STEPS[step]?.ms ?? 1000));
     return () => window.clearTimeout(t);
-  }, [step, visible, reduced]);
+  }, [step, visible, reduced, tabHidden]);
 
   const cur = CALL_STEPS[step] ?? CALL_STEPS[0]!;
+  // Speaking window starts when a message appears; synced to the step timeline.
+  useEffect(() => {
+    const s = CALL_STEPS[step];
+    if (reduced || !s || s.typing || s.fading || s.count === 0) { setSpeaking(false); return; }
+    setSpeaking(true);
+    const t = window.setTimeout(() => setSpeaking(false), speakMs(CALL_LINES[s.count - 1]!.text));
+    return () => window.clearTimeout(t);
+  }, [step, reduced]);
+  const speaker = speaking ? CALL_LINES[cur.count - 1] : undefined;
+  const wavePaused = !visible || tabHidden;
   useEffect(() => {
     const el = listRef.current;
     if (el) el.scrollTop = el.scrollHeight; // scrolls inside the card only
@@ -172,6 +211,10 @@ function CallMockup() {
           <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-teal-soft px-2.5 py-1 text-xs font-medium text-teal-strong">
             <span className="h-2 w-2 rounded-full bg-teal-strong motion-safe:animate-pulse" aria-hidden /> Example
           </span>
+        </div>
+        <div aria-hidden className="mt-4 flex h-[84px] flex-col justify-center gap-2 rounded-xl border bg-secondary px-3 py-2.5">
+          <WaveRow label="Terry (AI)" active={!!speaker?.ai} paused={wavePaused} tone="bg-teal-strong" />
+          <WaveRow label="Candidate" active={!!speaker && !speaker.ai} paused={wavePaused} tone="bg-navy-soft" />
         </div>
         <div className={`transition-opacity duration-500 ${cur.fading ? "opacity-0" : "opacity-100"}`}>
           <div ref={listRef} className="mt-4 h-72 overflow-hidden">
