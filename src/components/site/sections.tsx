@@ -1,4 +1,4 @@
-import { useState, type FormEvent, type ReactNode } from "react";
+import { useEffect, useRef, useState, type FormEvent, type ReactNode } from "react";
 import { Link } from "@tanstack/react-router";
 import {
   ArrowRight, Bell, BarChart3, CalendarCheck, Check, CheckCircle2, ClipboardList, Clock, FileQuestion,
@@ -96,44 +96,117 @@ export function Header() {
 }
 
 /* ---------------- Hero ---------------- */
+const CALL_LINES = [
+  { ai: true, at: "00:04", text: "Hi Sam, I'm Terry, an AI assistant calling about your application. This call is recorded and transcribed. Is now a good time?" },
+  { ai: false, at: "00:12", text: "Yes, that's fine." },
+  { ai: true, at: "00:19", text: "Great. How many years of experience do you have in logistics?" },
+  { ai: false, at: "00:27", text: "About five years, mostly warehouse supervision." },
+  { ai: true, at: "00:36", text: "Thanks. And what's your current notice period?" },
+  { ai: false, at: "00:45", text: "Four weeks, and I'd prefer hybrid." },
+  { ai: true, at: "00:58", text: "Lovely, thank you. The team will be in touch if it looks like a good fit." },
+];
+// Chips and the message count at which each appears.
+const CALL_CHIPS = [{ label: "5 yrs", after: 4 }, { label: "Logistics", after: 4 }, { label: "4 wks notice", after: 6 }, { label: "Hybrid", after: 6 }];
+type CallStep = { connected: boolean; count: number; typing: boolean; fading?: boolean; ms: number };
+const CALL_STEPS: CallStep[] = (() => {
+  const s: CallStep[] = [{ connected: false, count: 0, typing: false, ms: 1500 }];
+  CALL_LINES.forEach((_, i) => {
+    s.push({ connected: true, count: i, typing: true, ms: 1000 });
+    s.push({ connected: true, count: i + 1, typing: false, ms: i === CALL_LINES.length - 1 ? 4000 : 2000 });
+  });
+  s.push({ connected: true, count: CALL_LINES.length, typing: false, fading: true, ms: 500 });
+  return s;
+})();
+const FINAL_STEP = CALL_STEPS.length - 2;
+
 function CallMockup() {
-  const lines = [
-    { who: "Terry, AI assistant", ai: true, text: "Hi Sam, I'm Terry, an AI assistant calling about your application. This call is recorded and transcribed. Is now a good time?" },
-    { who: "Candidate", ai: false, text: "Yes, that's fine." },
-    { who: "Terry, AI assistant", ai: true, text: "Great. How many years of experience do you have in logistics?" },
-    { who: "Candidate", ai: false, text: "About five years, mostly warehouse supervision." },
-    { who: "Terry, AI assistant", ai: true, text: "Thanks. And what's your current notice period?" },
-  ];
+  const rootRef = useRef<HTMLElement>(null);
+  const listRef = useRef<HTMLDivElement>(null);
+  const [step, setStep] = useState(0);
+  const [visible, setVisible] = useState(false);
+  const [reduced, setReduced] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const apply = () => { setReduced(mq.matches); if (mq.matches) setStep(FINAL_STEP); };
+    apply();
+    mq.addEventListener("change", apply);
+    const el = rootRef.current;
+    let io: IntersectionObserver | undefined;
+    if (el && typeof IntersectionObserver !== "undefined") {
+      io = new IntersectionObserver(([e]) => setVisible(!!e?.isIntersecting));
+      io.observe(el);
+    }
+    return () => { mq.removeEventListener("change", apply); io?.disconnect(); };
+  }, []);
+
+  useEffect(() => {
+    if (reduced || !visible) return;
+    const t = window.setTimeout(() => setStep((s) => (s + 1) % CALL_STEPS.length), CALL_STEPS[step].ms);
+    return () => window.clearTimeout(t);
+  }, [step, visible, reduced]);
+
+  const cur = CALL_STEPS[step];
+  useEffect(() => {
+    const el = listRef.current;
+    if (el) el.scrollTop = el.scrollHeight; // scrolls inside the card only
+  }, [cur.count, cur.typing]);
+
+  const ended = cur.count === CALL_LINES.length;
+  const status = !cur.connected ? "Calling..." : ended ? "Call ended" : "Screening call in progress";
+  const timer = cur.count ? CALL_LINES[cur.count - 1].at : "00:00";
+  const nextAi = CALL_LINES[cur.count]?.ai ?? true;
+  const anim = reduced ? "" : "animate-in fade-in slide-in-from-bottom-2 duration-500";
+
   return (
-    <figure className="relative mx-auto w-full max-w-md" aria-label="Illustrative example of an AI screening call">
+    <figure ref={rootRef} className="relative mx-auto w-full max-w-md" aria-label="Illustrative example of an AI screening call">
       <div className="rounded-2xl border border-on-navy/10 bg-card p-5 text-card-foreground shadow-lift">
         <div className="flex items-center justify-between gap-3 border-b pb-4">
           <div className="flex min-w-0 items-center gap-3">
-            <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-teal-soft text-teal-strong"><PhoneCall className="h-5 w-5" aria-hidden /></span>
+            <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-teal-soft text-teal-strong"><PhoneCall className={`h-5 w-5 ${!cur.connected && !reduced ? "animate-pulse" : ""}`} aria-hidden /></span>
             <div className="min-w-0">
-              <p className="truncate text-sm font-semibold">Screening call in progress</p>
-              <p className="text-xs text-muted-foreground">Warehouse Supervisor role · 02:14</p>
+              <p className="truncate text-sm font-semibold" aria-live="off">{status}</p>
+              <p className="text-xs text-muted-foreground">Warehouse Supervisor role · <span className="tabular-nums">{timer}</span></p>
             </div>
           </div>
           <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-teal-soft px-2.5 py-1 text-xs font-medium text-teal-strong">
             <span className="h-2 w-2 rounded-full bg-teal-strong motion-safe:animate-pulse" aria-hidden /> Example
           </span>
         </div>
-        <ol className="mt-4 space-y-3">
-          {lines.map((l, i) => (
-            <li key={i} className={`flex ${l.ai ? "" : "justify-end"}`}>
-              <div className={`max-w-[85%] rounded-xl px-3.5 py-2.5 text-sm ${l.ai ? "bg-muted" : "bg-navy text-on-navy"}`}>
-                <p className={`text-[11px] font-semibold ${l.ai ? "text-teal-strong" : "text-on-navy-muted"}`}>{l.who}</p>
-                <p className="mt-0.5">{l.text}</p>
-              </div>
-            </li>
-          ))}
-        </ol>
-        <div className="mt-5 flex flex-wrap items-center justify-between gap-2 rounded-xl border bg-secondary px-4 py-3">
-          <div className="text-xs text-muted-foreground">5 yrs · Logistics · 4 wks notice · Hybrid</div>
-          <span className="inline-flex items-center gap-1 rounded-full bg-success px-2.5 py-1 text-xs font-semibold text-primary-foreground">
-            <CheckCircle2 className="h-3.5 w-3.5" aria-hidden /> Qualified
-          </span>
+        <div className={`transition-opacity duration-500 ${cur.fading ? "opacity-0" : "opacity-100"}`}>
+          <div ref={listRef} className="mt-4 h-72 overflow-hidden">
+            <ol className="space-y-3">
+              {CALL_LINES.slice(0, cur.count).map((l, i) => (
+                <li key={i} className={`flex ${l.ai ? "" : "justify-end"} ${anim}`}>
+                  <div className={`max-w-[85%] rounded-xl px-3.5 py-2.5 text-sm ${l.ai ? "bg-muted" : "bg-navy text-on-navy"}`}>
+                    <p className={`text-[11px] font-semibold ${l.ai ? "text-teal-strong" : "text-on-navy-muted"}`}>{l.ai ? "Terry, AI assistant" : "Candidate"}</p>
+                    <p className="mt-0.5">{l.text}</p>
+                  </div>
+                </li>
+              ))}
+              {cur.typing && (
+                <li className={`flex ${nextAi ? "" : "justify-end"} ${anim}`} aria-hidden>
+                  <div className={`flex gap-1 rounded-xl px-3.5 py-3 ${nextAi ? "bg-muted" : "bg-navy"}`}>
+                    {[0, 150, 300].map((d) => (
+                      <span key={d} className={`h-1.5 w-1.5 rounded-full animate-bounce ${nextAi ? "bg-muted-foreground" : "bg-on-navy-muted"}`} style={{ animationDelay: `${d}ms` }} />
+                    ))}
+                  </div>
+                </li>
+              )}
+            </ol>
+          </div>
+          <div className="mt-5 flex flex-wrap items-center justify-between gap-2 rounded-xl border bg-secondary px-4 py-3">
+            <div className="text-xs text-muted-foreground">
+              {CALL_CHIPS.map((c, i) => (
+                <span key={c.label} className={`${reduced ? "" : "transition-opacity duration-500"} ${cur.count >= c.after ? "opacity-100" : "opacity-0"}`}>
+                  {i > 0 && " · "}{c.label}
+                </span>
+              ))}
+            </div>
+            <span className={`inline-flex items-center gap-1 rounded-full bg-success px-2.5 py-1 text-xs font-semibold text-primary-foreground ${reduced ? "" : "transition-opacity duration-500"} ${ended ? "opacity-100" : "opacity-0"}`}>
+              <CheckCircle2 className="h-3.5 w-3.5" aria-hidden /> Qualified
+            </span>
+          </div>
         </div>
       </div>
       <figcaption className="mt-3 text-center text-xs text-on-navy-muted">Illustrative example only. Not a real candidate or customer call.</figcaption>
