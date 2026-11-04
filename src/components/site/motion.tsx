@@ -64,7 +64,7 @@ export function FlowDiagram() {
               <span className="mt-3 text-sm font-semibold">{n.label}</span>
             </div>
             {i < NODES.length - 1 && (
-              <div className="flow-track relative h-10 w-0.5 overflow-hidden bg-border md:mb-7 md:h-0.5 md:w-auto md:flex-1" aria-hidden>
+              <div className="flow-track relative h-10 w-0.5 bg-border md:mb-7 md:h-0.5 md:w-auto md:flex-1" aria-hidden>
                 <span className="flow-runner absolute inset-0" style={{ animationDelay: `${i * 0.8}s` }}>
                   <span className="absolute left-1/2 top-0 h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-teal-strong md:left-0 md:top-1/2" />
                 </span>
