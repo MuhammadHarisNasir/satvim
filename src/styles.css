@@ -137,10 +137,10 @@
 
 @utility reveal {
   opacity: 0;
-  transform: translateY(16px);
+  transform: translateY(12px);
   transition:
-    opacity 0.6s ease,
-    transform 0.6s ease;
+    opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
   &[data-visible="true"] {
     opacity: 1;
     transform: none;
@@ -164,4 +164,76 @@
     linear-gradient(oklch(1 0 0 / 0.04) 1px, transparent 1px),
     linear-gradient(90deg, oklch(1 0 0 / 0.04) 1px, transparent 1px);
   background-size: 40px 40px;
+}
+
+/* ---------- Motion system: one easing, 300–600ms, transform/opacity only ---------- */
+:root {
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@utility step-line {
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s var(--ease-out);
+  .reveal[data-visible="true"] & {
+    transform: scaleX(1);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    transform: none;
+    transition: none;
+  }
+}
+
+@utility lift {
+  position: relative;
+  transition: transform 0.3s var(--ease-out);
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    box-shadow: var(--shadow-lift);
+    opacity: 0;
+    transition: opacity 0.3s var(--ease-out);
+    pointer-events: none;
+  }
+  &:hover,
+  &:focus-within {
+    transform: translateY(-4px);
+  }
+  &:hover::after,
+  &:focus-within::after {
+    opacity: 1;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+    &::after { transition: none; }
+    &:hover, &:focus-within { transform: none; }
+  }
+}
+
+@keyframes flow-x {
+  0% { transform: translateX(0); opacity: 0; }
+  10%, 25% { opacity: 1; }
+  33%, 100% { transform: translateX(100%); opacity: 0; }
+}
+@keyframes flow-y {
+  0% { transform: translateY(0); opacity: 0; }
+  10%, 25% { opacity: 1; }
+  33%, 100% { transform: translateY(100%); opacity: 0; }
+}
+
+.flow-runner {
+  opacity: 0;
+  animation: flow-y 2.4s linear infinite;
+  animation-play-state: paused;
+}
+@media (min-width: 768px) {
+  .flow-runner { animation-name: flow-x; }
+}
+.flow[data-playing="true"] .flow-runner {
+  animation-play-state: running;
+}
+@media (prefers-reduced-motion: reduce) {
+  .flow-runner { animation: none; opacity: 0; }
 }

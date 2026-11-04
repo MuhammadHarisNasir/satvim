@@ -13,6 +13,7 @@ import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/s
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Logo } from "./Logo";
 import { Reveal } from "./Reveal";
+import { AnimatedNumber, FlowDiagram } from "./motion";
 import {
   CALENDLY_URL, DEMO_AUDIO_URL, DEMO_VIDEO_URL, EMAIL, LINKEDIN_URL, LOCATION, PHONE_DISPLAY, PHONE_TEL,
   calcRoi, gbp, isPlaceholder,
@@ -212,7 +213,10 @@ export function HowItWorks() {
         <ol className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {steps.map((s, i) => (
             <li key={s.title}>
-              <Reveal delay={i * 80} className="h-full">
+              <Reveal delay={i * 150} className="relative h-full">
+                {i < steps.length - 1 && (
+                  <span aria-hidden className="step-line absolute left-full top-1/2 z-0 hidden h-0.5 w-5 bg-teal-strong lg:block" style={{ transitionDelay: `${i * 150 + 300}ms` }} />
+                )}
                 <div className="relative h-full rounded-2xl border bg-card p-6 shadow-soft">
                   <div className="flex items-center justify-between">
                     <span className="grid h-11 w-11 place-items-center rounded-xl bg-navy text-teal"><s.icon className="h-5 w-5" aria-hidden /></span>
@@ -225,6 +229,7 @@ export function HowItWorks() {
             </li>
           ))}
         </ol>
+        <Reveal><FlowDiagram /></Reveal>
       </div>
     </section>
   );
@@ -396,8 +401,8 @@ export function Roi() {
             <div className="flex flex-col justify-center rounded-xl bg-navy p-6 text-on-navy" aria-live="polite">
               {r ? (
                 <dl className="space-y-5">
-                  <div><dt className="text-sm text-on-navy-muted">Estimated hours saved per month</dt><dd className="text-4xl font-extrabold text-teal">{r.hours.toLocaleString("en-GB", { maximumFractionDigits: 1 })}</dd></div>
-                  <div><dt className="text-sm text-on-navy-muted">Estimated cost saved per month</dt><dd className="text-4xl font-extrabold text-teal">{gbp(r.cost)}</dd></div>
+                  <div><dt className="text-sm text-on-navy-muted">Estimated hours saved per month</dt><dd className="text-4xl font-extrabold text-teal"><AnimatedNumber value={r.hours} format={(n) => n.toLocaleString("en-GB", { maximumFractionDigits: 1 })} /></dd></div>
+                  <div><dt className="text-sm text-on-navy-muted">Estimated cost saved per month</dt><dd className="text-4xl font-extrabold text-teal"><AnimatedNumber value={r.cost} format={gbp} /></dd></div>
                 </dl>
               ) : (
                 <p className="text-on-navy-muted">Enter all three values above zero to see your estimate.</p>
@@ -426,7 +431,7 @@ export function Pricing() {
         <div className="mt-12 grid gap-6 lg:grid-cols-3">
           {plans.map((p, i) => (
             <Reveal key={p.name} delay={i * 80} className="h-full">
-              <article className={`relative flex h-full flex-col rounded-2xl border bg-card p-7 ${p.popular ? "border-2 border-teal-strong shadow-lift" : "shadow-soft"}`}>
+              <article className={`lift relative flex h-full flex-col rounded-2xl border bg-card p-7 ${p.popular ? "border-2 border-teal-strong shadow-lift" : "shadow-soft"}`}>
                 {p.popular && <span className="absolute -top-3 left-7 rounded-full bg-teal px-3 py-1 text-xs font-bold text-navy-deep">Most popular</span>}
                 <h3 className="text-xl font-bold">{p.name}</h3>
                 <div className="mt-5 grid grid-cols-2 gap-3">
@@ -444,7 +449,7 @@ export function Pricing() {
             </Reveal>
           ))}
           <Reveal delay={160} className="h-full">
-            <article className="flex h-full flex-col rounded-2xl border bg-card p-7 shadow-soft">
+            <article className="lift flex h-full flex-col rounded-2xl border bg-card p-7 shadow-soft">
               <h3 className="text-xl font-bold">Custom</h3>
               <p className="mt-5 text-3xl font-extrabold">Let's talk</p>
               <p className="mt-4 flex-1 text-muted-foreground">For ATS or CRM integrations, multiple offices, or special workflows.</p>
