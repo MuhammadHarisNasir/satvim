@@ -118,8 +118,8 @@ function WaveRow({ label, active, paused, tone }: { label: string; active: boole
   return (
     <div className="flex items-center gap-3">
       <div className="w-20 shrink-0">
-        <p className="text-[11px] font-semibold">{label}</p>
-        <p className="text-[10px] text-muted-foreground">{active ? "Speaking" : "Listening"}</p>
+        <p className="text-[11px] font-semibold leading-tight">{label}</p>
+        <p className="text-[10px] leading-tight text-muted-foreground">{active ? "Speaking" : "Listening"}</p>
       </div>
       <div className="wave flex h-6 flex-1 items-center justify-between gap-[3px]" data-active={active} data-paused={paused}>
         {WAVE_BARS.map((b, i) => (
@@ -212,7 +212,7 @@ function CallMockup() {
             <span className="h-2 w-2 rounded-full bg-teal-strong motion-safe:animate-pulse" aria-hidden /> Example
           </span>
         </div>
-        <div aria-hidden className="mt-4 h-[76px] space-y-2 rounded-xl border bg-secondary px-3 py-2.5">
+        <div aria-hidden className="mt-4 flex h-[84px] flex-col justify-center gap-2 rounded-xl border bg-secondary px-3 py-2.5">
           <WaveRow label="Terry (AI)" active={!!speaker?.ai} paused={wavePaused} tone="bg-teal-strong" />
           <WaveRow label="Candidate" active={!!speaker && !speaker.ai} paused={wavePaused} tone="bg-navy-soft" />
         </div>
