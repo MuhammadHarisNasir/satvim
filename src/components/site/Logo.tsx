@@ -1,14 +1,11 @@
-import logo from "@/assets/harryflows-logo.png.asset.json";
-import logoWhite from "@/assets/harryflows-logo-white.png.asset.json";
-
-export function Logo({ reversed = false, className = "h-9" }: { reversed?: boolean; className?: string }) {
+export function Logo({ reversed = false, className = "text-2xl" }: { reversed?: boolean; className?: string }) {
   return (
-    <img
-      src={reversed ? logoWhite.url : logo.url}
-      alt="HarryFlows"
-      className={`${className} w-auto`}
-      width={764}
-      height={350}
-    />
+    <span
+      className={`inline-flex items-baseline font-extrabold tracking-tight ${reversed ? "text-on-navy" : "text-foreground"} ${className}`}
+      aria-label="Satvim"
+      role="img"
+    >
+      Sat<span className="text-teal">vim</span>
+    </span>
   );
 }

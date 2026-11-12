@@ -78,10 +78,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "HarryFlows — AI candidate qualification for UK recruitment agencies" },
+      { title: "Satvim | AI Automation for Recruitment Agencies" },
       { name: "description", content: "AI voice agent that screens your existing applicants and sends only qualified candidates to your team." },
-      { name: "author", content: "HarryFlows" },
-      { property: "og:site_name", content: "HarryFlows" },
+      { name: "author", content: "Satvim" },
+      { property: "og:site_name", content: "Satvim" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],

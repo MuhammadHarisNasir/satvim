@@ -4,18 +4,18 @@ import { LegalLayout } from "@/components/site/LegalLayout";
 export const Route = createFileRoute("/terms")({
   head: () => ({
     meta: [
-      { title: "Terms — HarryFlows" },
-      { name: "description", content: "HarryFlows terms of service (placeholder pending legal review)." },
-      { property: "og:title", content: "Terms — HarryFlows" },
-      { property: "og:description", content: "HarryFlows terms of service (placeholder pending legal review)." },
+      { title: "Terms — Satvim" },
+      { name: "description", content: "Satvim terms of service (placeholder pending legal review)." },
+      { property: "og:title", content: "Terms — Satvim" },
+      { property: "og:description", content: "Satvim terms of service (placeholder pending legal review)." },
       { property: "og:type", content: "article" },
       { name: "robots", content: "noindex" },
     ],
-    links: [{ rel: "canonical", href: "/terms" }],
+    links: [{ rel: "canonical", href: "https://satvim.com/terms" }],
   }),
   component: () => (
     <LegalLayout title="Terms of Service">
-      <p>[Placeholder] These terms will set out how HarryFlows provides its services.</p>
+      <p>[Placeholder] These terms will set out how Satvim provides its services.</p>
       <h2>Services</h2>
       <p>[Placeholder] Scope of setup and monthly retainer services.</p>
       <h2>Fees and third-party costs</h2>
