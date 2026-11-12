@@ -7,7 +7,7 @@ export const DEMO_VIDEO_URL = "{{DEMO_VIDEO_URL}}";
 export const DEMO_AUDIO_URL = "{{DEMO_AUDIO_URL}}";
 export const LINKEDIN_URL = "{{LINKEDIN_URL}}";
 
-export const EMAIL = "harryflows.ai@gmail.com";
+export const EMAIL = "haris@satvim.com";
 export const PHONE_DISPLAY = "+92 371 7466108";
 export const PHONE_TEL = "tel:+923717466108";
 export const LOCATION = "Remote-first agency serving UK recruitment agencies";

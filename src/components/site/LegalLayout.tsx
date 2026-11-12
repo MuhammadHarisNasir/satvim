@@ -7,8 +7,8 @@ export function LegalLayout({ title, children }: { title: string; children: Reac
     <div className="min-h-dvh bg-background">
       <header className="border-b">
         <div className="mx-auto flex max-w-3xl items-center justify-between px-5 py-4">
-          <Link to="/" aria-label="HarryFlows home">
-            <Logo className="h-8" />
+          <Link to="/" aria-label="Satvim home">
+            <Logo className="text-2xl" />
           </Link>
           <Link to="/" className="text-sm font-medium text-teal-strong hover:underline">
             Back to home

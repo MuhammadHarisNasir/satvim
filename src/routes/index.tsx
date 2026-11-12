@@ -3,7 +3,7 @@ import {
   Contact, CtaBand, Demo, Faq, Features, Fit, Footer, Header, Hero, HowItWorks, Ownership, Pricing, Problem, Roi,
 } from "@/components/site/sections";
 
-const TITLE = "HarryFlows — AI voice screening for UK recruitment agencies";
+const TITLE = "Satvim | AI Automation for Recruitment Agencies";
 const DESC =
   "An AI voice agent that calls your new applicants, screens them against your criteria and sends only qualified candidates to your team.";
 
@@ -15,12 +15,12 @@ export const Route = createFileRoute("/")({
       { property: "og:title", content: TITLE },
       { property: "og:description", content: DESC },
       { property: "og:type", content: "website" },
-      { property: "og:url", content: "/" },
+      { property: "og:url", content: "https://satvim.com/" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: TITLE },
       { name: "twitter:description", content: DESC },
     ],
-    links: [{ rel: "canonical", href: "/" }],
+    links: [{ rel: "canonical", href: "https://satvim.com/" }],
   }),
   component: Index,
 });
