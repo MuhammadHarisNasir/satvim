@@ -680,7 +680,7 @@ export function Contact() {
           <ul className="mt-8 space-y-4">
             <li><a href={`mailto:${EMAIL}`} className="inline-flex items-center gap-3 font-medium hover:text-teal-strong"><Mail className="h-5 w-5 text-teal-strong" aria-hidden />{EMAIL}</a></li>
             <li><a href={PHONE_TEL} className="inline-flex items-center gap-3 font-medium hover:text-teal-strong"><Phone className="h-5 w-5 text-teal-strong" aria-hidden />{PHONE_DISPLAY}</a></li>
-            <li className="text-muted-foreground">{LOCATION}</li>
+            <li className="text-muted-foreground">Done-for-you setup and monthly management. You never have to touch the tech.</li>
           </ul>
         </Reveal>
         <Reveal delay={100}>
