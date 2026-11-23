@@ -12,7 +12,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Logo } from "./Logo";
-import markAsset from "@/assets/satvim-mark.png.asset.json";
+import { LogoMark } from "@/components/site/LogoMark";
 import { Reveal } from "./Reveal";
 import { AnimatedNumber, FlowDiagram } from "./motion";
 import {
@@ -59,13 +59,7 @@ export function Header() {
     <header className="on-navy sticky top-0 z-50 border-b border-on-navy/10 bg-navy/95 backdrop-blur">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-5">
         <a href="#top" aria-label="Satvim home" className="flex shrink-0 items-center gap-2.5">
-          <img
-            src={markAsset.url}
-            alt=""
-            width={664}
-            height={640}
-            className="h-7 w-auto shrink-0 object-contain"
-          />
+          <LogoMark className="h-10 w-auto shrink-0" />
           <span className="flex flex-col leading-none">
             <Logo reversed className="text-2xl" />
             <span className="mt-1 hidden text-[10px] font-medium tracking-wide text-on-navy-muted sm:block">AI Automation for Recruitment Agencies</span>
@@ -731,13 +725,7 @@ export function Footer() {
       <div className="mx-auto grid max-w-6xl gap-10 px-5 py-14 md:grid-cols-[1.4fr_1fr_1.2fr]">
         <div>
           <span className="flex items-center gap-3">
-            <img
-              src={markAsset.url}
-              alt=""
-              width={664}
-              height={640}
-              className="h-8 w-auto shrink-0 object-contain"
-            />
+            <LogoMark className="h-10 w-auto shrink-0" />
             <span className="flex flex-col leading-none">
               <Logo reversed className="text-2xl" />
               <span className="mt-1 text-[10px] font-medium tracking-wide text-on-navy-muted">AI Automation for Recruitment Agencies</span>
