@@ -122,11 +122,11 @@ const WAVE_BARS = Array.from({ length: 28 }, (_, i) => ({
 function WaveRow({ label, active, paused, tone }: { label: string; active: boolean; paused: boolean; tone: string }) {
   return (
     <div className="flex items-center gap-3">
-      <div className="w-20 shrink-0">
+      <div className="w-16 shrink-0 sm:w-20">
         <p className="text-[11px] font-semibold leading-tight">{label}</p>
         <p className="text-[10px] leading-tight text-muted-foreground">{active ? "Speaking" : "Listening"}</p>
       </div>
-      <div className="wave flex h-6 flex-1 items-center justify-between gap-[3px]" data-active={active} data-paused={paused}>
+      <div className="wave flex h-6 min-w-0 flex-1 items-center justify-between gap-[3px]" data-active={active} data-paused={paused}>
         {WAVE_BARS.map((b, i) => (
           <span key={i} className={`wave-bar h-full w-[3px] rounded-full ${tone} ${i >= 16 ? "hidden sm:block" : ""}`}
             style={{ ["--amp" as string]: b.amp, ["--dur" as string]: `${b.dur}s`, ["--delay" as string]: `${b.delay}s` }} />
@@ -203,17 +203,17 @@ function CallMockup() {
   const anim = reduced ? "" : "animate-in fade-in slide-in-from-bottom-2 duration-500";
 
   return (
-    <figure ref={rootRef} className="relative mx-auto w-full max-w-md" aria-label="Illustrative example of an AI screening call">
-      <div className="rounded-2xl border border-on-navy/10 bg-card p-5 text-card-foreground shadow-lift">
-        <div className="flex items-center justify-between gap-3 border-b pb-4">
-          <div className="flex min-w-0 items-center gap-3">
+    <figure ref={rootRef} className="relative mx-auto w-full min-w-0 max-w-md" aria-label="Illustrative example of an AI screening call">
+      <div className="box-border rounded-2xl border border-on-navy/10 bg-card p-5 text-card-foreground shadow-lift">
+        <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-2 border-b pb-4">
+          <div className="flex min-w-0 flex-1 items-center gap-3">
             <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-teal-soft text-teal-strong"><PhoneCall className={`h-5 w-5 ${!cur.connected && !reduced ? "animate-pulse" : ""}`} aria-hidden /></span>
             <div className="min-w-0">
-              <p className="truncate text-sm font-semibold" aria-live="off">{status}</p>
+              <p className="text-sm font-semibold" aria-live="off">{status}</p>
               <p className="text-xs text-muted-foreground">Warehouse Supervisor role · <span className="tabular-nums">{timer}</span></p>
             </div>
           </div>
-          <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-teal-soft px-2.5 py-1 text-xs font-medium text-teal-strong">
+          <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-teal-soft px-2.5 py-1 text-xs font-medium text-teal-strong max-sm:w-full max-sm:justify-center">
             <span className="h-2 w-2 rounded-full bg-teal-strong motion-safe:animate-pulse" aria-hidden /> Example
           </span>
         </div>
@@ -226,7 +226,7 @@ function CallMockup() {
             <ol className="space-y-3">
               {CALL_LINES.slice(0, cur.count).map((l, i) => (
                 <li key={i} className={`flex ${l.ai ? "" : "justify-end"} ${anim}`}>
-                  <div className={`max-w-[85%] rounded-xl px-3.5 py-2.5 text-sm ${l.ai ? "bg-muted" : "bg-navy text-on-navy"}`}>
+                  <div className={`max-w-[85%] min-w-0 break-words rounded-xl px-3.5 py-2.5 text-sm ${l.ai ? "bg-muted" : "bg-navy text-on-navy"}`}>
                     <p className={`text-[11px] font-semibold ${l.ai ? "text-teal-strong" : "text-on-navy-muted"}`}>{l.ai ? "Terry, AI assistant" : "Candidate"}</p>
                     <p className="mt-0.5">{l.text}</p>
                   </div>
@@ -244,7 +244,7 @@ function CallMockup() {
             </ol>
           </div>
           <div className="mt-5 flex flex-wrap items-center justify-between gap-2 rounded-xl border bg-secondary px-4 py-3">
-            <div className="text-xs text-muted-foreground">
+            <div className="min-w-0 text-xs text-muted-foreground">
               {CALL_CHIPS.map((c, i) => (
                 <span key={c.label} className={`${reduced ? "" : "transition-opacity duration-500"} ${cur.count >= c.after ? "opacity-100" : "opacity-0"}`}>
                   {i > 0 && " · "}{c.label}
@@ -267,7 +267,7 @@ export function Hero() {
     <section id="top" className="on-navy bg-hero relative overflow-hidden">
       <div className="bg-grid absolute inset-0" aria-hidden />
       <div className="relative mx-auto grid max-w-6xl items-center gap-14 px-5 py-20 lg:grid-cols-[1.1fr_1fr] lg:py-28">
-        <Reveal>
+        <Reveal className="min-w-0">
           <p className="inline-flex items-center gap-2 rounded-full border border-on-navy/15 px-3 py-1 text-xs font-medium text-on-navy-muted">
             <Sparkles className="h-3.5 w-3.5 text-teal" aria-hidden /> AI voice screening for recruitment agencies
           </p>
@@ -285,7 +285,7 @@ export function Hero() {
           </div>
           <p className="mt-6 text-sm text-on-navy-muted">Built for founder-led recruitment agencies in the UK.</p>
         </Reveal>
-        <Reveal delay={150}><CallMockup /></Reveal>
+        <Reveal delay={150} className="min-w-0"><CallMockup /></Reveal>
       </div>
     </section>
   );
