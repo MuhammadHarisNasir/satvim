@@ -510,7 +510,7 @@ export function Roi() {
         <SectionHead eyebrow="ROI estimator" title="Estimate the time you could save" />
         <Reveal className="mt-10">
           <div className="grid gap-8 rounded-2xl border bg-card p-6 shadow-soft sm:p-8 md:grid-cols-[1fr_1fr]">
-            <div className="space-y-5">
+            <div className="min-w-0 space-y-5">
               {fields.map((f) => (
                 <div key={f.k}>
                   <Label htmlFor={`roi-${f.k}`}>{f.label}</Label>
@@ -519,11 +519,11 @@ export function Roi() {
                 </div>
               ))}
             </div>
-            <div className="flex flex-col justify-center rounded-xl bg-navy p-6 text-on-navy" aria-live="polite">
+            <div className="flex min-w-0 flex-col justify-center rounded-xl bg-navy p-6 text-on-navy" aria-live="polite">
               {r ? (
                 <dl className="space-y-5">
-                  <div><dt className="text-sm text-on-navy-muted">Estimated hours saved per month</dt><dd className="text-4xl font-extrabold text-teal"><AnimatedNumber value={r.hours} format={(n) => n.toLocaleString("en-GB", { maximumFractionDigits: 1 })} /></dd></div>
-                  <div><dt className="text-sm text-on-navy-muted">Estimated cost saved per month</dt><dd className="text-4xl font-extrabold text-teal"><AnimatedNumber value={r.cost} format={gbp} /></dd></div>
+                  <div><dt className="text-sm text-on-navy-muted">Estimated hours saved per month</dt><dd className="text-4xl font-extrabold break-all text-teal"><AnimatedNumber value={r.hours} format={(n) => n.toLocaleString("en-GB", { maximumFractionDigits: 1 })} /></dd></div>
+                  <div><dt className="text-sm text-on-navy-muted">Estimated cost saved per month</dt><dd className="text-4xl font-extrabold break-all text-teal"><AnimatedNumber value={r.cost} format={gbp} /></dd></div>
                 </dl>
               ) : (
                 <p className="text-on-navy-muted">Enter all three values above zero to see your estimate.</p>
