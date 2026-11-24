@@ -2,7 +2,7 @@ import { useEffect, useRef, useState, type FormEvent, type ReactNode } from "rea
 import { Link } from "@tanstack/react-router";
 import {
   ArrowRight, Bell, BarChart3, CalendarCheck, Check, CheckCircle2, ClipboardList, Clock, FileQuestion,
-  Headphones, Linkedin, Mail, Menu, MessageSquareText, Mic, Phone, PhoneCall, PhoneOff, Play, RefreshCw,
+  Headphones, Linkedin, Mail, Menu, MessageSquareText, Mic, PhoneCall, PhoneOff, Play, RefreshCw,
   ShieldCheck, Sparkles, UserPlus, Users, XCircle, KeyRound, Database, Hourglass,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -16,7 +16,7 @@ import { LogoMark } from "@/components/site/LogoMark";
 import { Reveal } from "./Reveal";
 import { AnimatedNumber, FlowDiagram } from "./motion";
 import {
-  CALENDLY_URL, DEMO_AUDIO_URL, DEMO_VIDEO_URL, EMAIL, LINKEDIN_URL, LOCATION, PHONE_DISPLAY, PHONE_TEL,
+  CALENDLY_URL, DEMO_AUDIO_URL, DEMO_VIDEO_URL, EMAIL, LINKEDIN_URL, LOCATION,
   calcRoi, gbp, isPlaceholder,
 } from "@/lib/site-config";
 
@@ -681,7 +681,6 @@ export function Contact() {
           <p className="mt-4 text-lg text-muted-foreground">Tell us about your agency and we'll be in touch.</p>
           <ul className="mt-8 space-y-4">
             <li><a href={`mailto:${EMAIL}`} className="inline-flex items-center gap-3 font-medium hover:text-teal-strong"><Mail className="h-5 w-5 text-teal-strong" aria-hidden />{EMAIL}</a></li>
-            <li><a href={PHONE_TEL} className="inline-flex items-center gap-3 font-medium hover:text-teal-strong"><Phone className="h-5 w-5 text-teal-strong" aria-hidden />{PHONE_DISPLAY}</a></li>
             <li className="text-muted-foreground">Done-for-you setup and monthly management. You never have to touch the tech.</li>
           </ul>
         </Reveal>
@@ -744,7 +743,6 @@ export function Footer() {
         </nav>
         <ul className="space-y-3 text-sm">
           <li><a href={`mailto:${EMAIL}`} className="hover:text-on-navy">{EMAIL}</a></li>
-          <li><a href={PHONE_TEL} className="hover:text-on-navy">{PHONE_DISPLAY}</a></li>
           <li>{LOCATION}</li>
           <li>
             {isPlaceholder(LINKEDIN_URL) ? (
